@@ -1,0 +1,18 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2.882905765811533,
+      "y": 6.9956624528633675
+    },
+    "rotation": 0.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": []
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

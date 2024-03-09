@@ -60,7 +60,7 @@ public class RobotContainer {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
     drivetrain.registerTelemetry(logger::telemeterize);
-    driverY.onTrue(new ArmPos(manipulator, 14));
+    driverY.onTrue(new ArmPos(manipulator, 15));
 
   }
 

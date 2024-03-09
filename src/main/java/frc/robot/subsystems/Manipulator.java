@@ -60,7 +60,7 @@ public class Manipulator extends SubsystemBase {
 
         var slot0Configs = new Slot0Configs();
 
-        slot0Configs.kP = 0.1;
+        slot0Configs.kP = 0.4;
         slot0Configs.kI = 0;
         slot0Configs.kD = 0;
 

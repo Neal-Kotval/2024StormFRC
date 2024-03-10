@@ -3,17 +3,15 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
 
-public class ArmPos extends Command {
+public class MoveArm extends Command {
   private Manipulator manipulator;
   private double pos;
 
-  public ArmPos(Manipulator manipulator, double pos) {
+  public MoveArm(Manipulator manipulator, double pos) {
     this.manipulator = manipulator;
     this.pos = pos;
 

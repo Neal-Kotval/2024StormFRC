@@ -12,13 +12,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Timer;
-
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.controls.StrictFollower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 
 public class Manipulator extends SubsystemBase {
@@ -118,8 +114,8 @@ public class Manipulator extends SubsystemBase {
 
 
 
-    public void zeroEncoder() {
-        arm_l.setPosition(0);
-        arm_r.setPosition(0);
+    public void setArmEncoder(double pos) {
+        arm_l.setPosition(pos);
+        arm_r.setPosition(pos);
     }
 }

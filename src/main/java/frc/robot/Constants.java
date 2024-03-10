@@ -14,4 +14,6 @@ public class Constants {
     public static final int RightArm = 10;
     public static final int Intake = 8;
 
+    public static final int armEncoder = 100;
+
 }

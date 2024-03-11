@@ -43,7 +43,10 @@ public class RobotContainer {
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
+  // triggers
   public Trigger driverY = new Trigger(()->xbox2.getYButton());
+  public Trigger padUp = new Trigger(()->(xbox2.getPOV() == 0));
+  public Trigger padDown = new Trigger(()->(xbox2.getPOV() == 180));
 
   private void configureBindings() {
     
@@ -66,7 +69,11 @@ public class RobotContainer {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
     drivetrain.registerTelemetry(logger::telemeterize);
+
+    // Non-Swerve Bindings
     driverY.onTrue(new ArmPos(manipulator, 15));
+    padUp.whileTrue(new MoveArm(manipulator, Constants.armPower));
+    padDown.whileTrue(new MoveArm(manipulator, -Constants.armPower));
 
   }
 

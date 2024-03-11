@@ -17,42 +17,37 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+
 public class Manipulator extends SubsystemBase {
 
-    //checks if note is in intake
-   
-
     //arm l + r
-    TalonFX arm_l = new TalonFX(Constants.LeftArm);
-    TalonFX arm_r = new TalonFX(Constants.RightArm);
+    TalonFX leftArm = new TalonFX(Constants.LeftArm);
+    TalonFX rightArm = new TalonFX(Constants.RightArm);
 
     //shooter a + b
-    TalonFX LeftShooter = new TalonFX(Constants.LeftShooter);
-    TalonFX RightShooter = new TalonFX(Constants.RightShooter);
+    TalonFX leftShooter = new TalonFX(Constants.LeftShooter);
+    TalonFX rightShooter = new TalonFX(Constants.RightShooter);
 
     //intake
     TalonSRX intakeMotor = new TalonSRX(Constants.Intake);
 
-
-    public final  double kARM_FLOOR_POS = -27.846;  // intaking
-    public final double kARM_FENDER_POS = 0;  // close shot
-    public final double kARM_START_POS = 0;  // start config
-    public final double kARM_AMP_POS   = 0;  // amp scoring
-
-    private final PositionVoltage m_position_request;
-    private final VelocityVoltage m_velocity_request;
-
+    private final PositionVoltage positionRequest;
+    private final VelocityVoltage velocityRequest;
 
     private final TalonFXConfiguration openLoopConfig = new TalonFXConfiguration();
 
+    DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.armEncoder);
+
+    private final double absolutePosition;
+
     public Manipulator() {
         
-
         openLoopConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.25;
         openLoopConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.25;
 
-        arm_l.getConfigurator().apply(openLoopConfig);
-        arm_r.getConfigurator().apply(openLoopConfig);
+        leftArm.getConfigurator().apply(openLoopConfig);
+        rightArm.getConfigurator().apply(openLoopConfig);
 
         var slot0Configs = new Slot0Configs();
 
@@ -60,41 +55,41 @@ public class Manipulator extends SubsystemBase {
         slot0Configs.kI = 0;
         slot0Configs.kD = 0;
 
-        arm_l.getConfigurator().apply(slot0Configs);
-        arm_r.getConfigurator().apply(slot0Configs);
+        leftArm.getConfigurator().apply(slot0Configs);
+        rightArm.getConfigurator().apply(slot0Configs);
 
-        m_position_request = new PositionVoltage(0).withSlot(0);
-        m_velocity_request = new VelocityVoltage(0).withSlot(0);
+        positionRequest = new PositionVoltage(0).withSlot(0);
+        velocityRequest = new VelocityVoltage(0).withSlot(0);
 
-        
-        RightShooter.setInverted(true);
-        arm_l.setInverted(true);
+        rightShooter.setInverted(true);
+        leftArm.setInverted(true);
 
-        // arm_r.setControl(new StrictFollower(arm_l.getDeviceID()));
-
-        arm_l.setNeutralMode(NeutralModeValue.Brake);
-        arm_r.setNeutralMode(NeutralModeValue.Brake);
+        leftArm.setNeutralMode(NeutralModeValue.Brake);
+        rightArm.setNeutralMode(NeutralModeValue.Brake);
         intakeMotor.setNeutralMode(NeutralMode.Brake);
 
+        absolutePosition = armEncoder.getAbsolutePosition();
+
+        //keep in mind TalonFX rotations may be different than Through Bore rotations, shouldnt be problem but verify
+        leftArm.setPosition(absolutePosition);
+        rightArm.setPosition(absolutePosition);
     }
 
     public double get_arm_enc() {
-        //returns in rotations
-       return  arm_l.getPosition().getValue();
+
+       return  leftArm.getPosition().getValue();
+
     }
 
    
     public void arm_to_pos(double pos) {
-            
-        arm_l.setControl(m_position_request.withPosition(pos));
-        arm_r.setControl(m_position_request.withPosition(pos));
+        leftArm.setControl(positionRequest.withPosition(pos));
+        rightArm.setControl(positionRequest.withPosition(pos));
     }
 
     public void move_arm(double power) {
-
-        arm_l.set(power);
-        arm_r.set(power);
-      // -ve, as motors are pointing in opposite directions
+        leftArm.set(power);
+        rightArm.set(power);
     }
 
     public void intake(double power) {
@@ -103,19 +98,21 @@ public class Manipulator extends SubsystemBase {
 
 
     public void shoot(double power) {
-        LeftShooter.set(power);
-        RightShooter.set(power);
+        leftShooter.set(power);
+        rightShooter.set(power);
     }
 
     public void velocityShooting(double velocity) {
-        LeftShooter.setControl(m_velocity_request.withVelocity(velocity));
-        RightShooter.setControl(m_velocity_request.withVelocity(velocity));
+        leftShooter.setControl(velocityRequest.withVelocity(velocity));
+        rightShooter.setControl(velocityRequest.withVelocity(velocity));
     }
 
-
+    public double getShootingVelocity() {
+        return leftShooter.getVelocity().getValue();
+    }
 
     public void setArmEncoder(double pos) {
-        arm_l.setPosition(pos);
-        arm_r.setPosition(pos);
+        leftArm.setPosition(pos);
+        rightArm.setPosition(pos);
     }
 }

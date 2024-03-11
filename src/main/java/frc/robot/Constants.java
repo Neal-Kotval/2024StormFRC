@@ -5,7 +5,7 @@ package frc.robot;
 public class Constants {
         public static final double stickDeadband = 0.1;
 
-    //CAN IDs
+    //Motor CAN IDs
     public static final int LeftClimb = 7;
     public static final int RightClimb = 2;
     public static final int LeftShooter = 5;
@@ -14,6 +14,17 @@ public class Constants {
     public static final int RightArm = 10;
     public static final int Intake = 8;
 
+
     public static final double armPower = 0.2;
+  
+    //Sensor CAN IDs
+    public static final int armEncoder = 100;
+
+    //auto constants
+    public static final double autoShootingVelocity = 2;
+
+    //Arm Positions
+    public static final double armFloorPosition = 0;
+
 
 }

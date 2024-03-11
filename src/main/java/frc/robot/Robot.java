@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
     // Initialize subsystems
     manip = new Manipulator();
     arm = new TelescopingArm();
-    currArmTarget = manip.kARM_START_POS;
+    currArmTarget = 0;
 
     
     xbox = new XboxController(1);

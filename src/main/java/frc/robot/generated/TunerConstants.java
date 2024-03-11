@@ -51,10 +51,8 @@ public class TunerConstants {
 
     private static final boolean kSteerMotorReversed = false;
 
-
     private static final String kCANbusName = "";
     private static final int kPigeonId = 0;
-
 
     // These are only used for simulation
     private static final double kSteerInertia = 0.00001;

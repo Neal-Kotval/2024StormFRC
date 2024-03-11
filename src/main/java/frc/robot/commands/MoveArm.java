@@ -9,11 +9,11 @@ import frc.robot.subsystems.*;
 
 public class MoveArm extends Command {
   private Manipulator manipulator;
-  private double pos;
+  private double power;
 
-  public MoveArm(Manipulator manipulator, double pos) {
+  public MoveArm(Manipulator manipulator, double power) {
     this.manipulator = manipulator;
-    this.pos = pos;
+    this.power = power;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(manipulator);
@@ -26,7 +26,7 @@ public class MoveArm extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    manipulator.arm_to_pos(pos);
+    manipulator.move_arm(power);
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +38,6 @@ public class MoveArm extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(pos-manipulator.get_arm_enc()) <= 0.3);
+    return false;
   }
 }

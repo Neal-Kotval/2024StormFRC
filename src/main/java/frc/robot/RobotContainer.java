@@ -45,8 +45,8 @@ public class RobotContainer {
 
   // triggers
   public Trigger driverY = new Trigger(()->xbox2.getYButton());
-  public Trigger padUp = new Trigger(()->(xbox2.getPOV() == 0));
-  public Trigger padDown = new Trigger(()->(xbox2.getPOV() == 180));
+  public Trigger padUp = new Trigger(()->(xbox2.getPOV()==0));
+  public Trigger padDown = new Trigger(()->(xbox2.getPOV()==180));
 
   private void configureBindings() {
     
@@ -91,6 +91,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new PathPlannerAuto("New Auto");
+    return autoChooser.getSelected();
   }
 }

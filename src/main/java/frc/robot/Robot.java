@@ -104,21 +104,6 @@ public class Robot extends TimedRobot {
       manip.intake(0);
     }
 
-
-
-    /* Manual Arm */
-    if (xbox.getPOV(0) == 0) {
-        manip.move_arm(0.3); // Up
-
-
-    } else if (xbox.getPOV(0) == 180) {
-        manip.move_arm(-.3); // Down
-
-
-    } else {
-        manip.move_arm(0);
-    }
-
     //zero arm encoder
     if (xbox.getXButton()) {
       manip.setArmEncoder(0);

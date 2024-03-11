@@ -7,6 +7,7 @@ package frc.robot;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 
@@ -71,7 +72,10 @@ public class RobotContainer {
   }
 
   public void registerNamedCommands() {
-    // NamedCommands.registerCommand("SpinUpShooter", new ArmPos());
+    NamedCommands.registerCommand("armToFloor", new ArmPos(manipulator, Constants.armFloorPosition));
+    NamedCommands.registerCommand("timedIntake", new TimedIntake(manipulator));
+    NamedCommands.registerCommand("autoShoot", new AutoShoot(manipulator, Constants.autoShootingVelocity));
+
   }
 
   public RobotContainer() {

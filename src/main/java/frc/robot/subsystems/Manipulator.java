@@ -107,6 +107,10 @@ public class Manipulator extends SubsystemBase {
         rightShooter.setControl(velocityRequest.withVelocity(velocity));
     }
 
+    public double getShootingVelocity() {
+        return leftShooter.getVelocity().getValue();
+    }
+
     public void setArmEncoder(double pos) {
         leftArm.setPosition(pos);
         rightArm.setPosition(pos);

@@ -71,7 +71,7 @@ public class RobotContainer {
     drivetrain.registerTelemetry(logger::telemeterize);
 
     // Non-Swerve Bindings
-    driverY.onTrue(new ArmPos(manipulator, 15));
+    // driverY.onTrue(new ArmPos(manipulator, 15));
     padUp.whileTrue(new MoveArm(manipulator, Constants.armPower));
     padDown.whileTrue(new MoveArm(manipulator, -Constants.armPower));
 

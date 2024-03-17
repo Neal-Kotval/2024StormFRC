@@ -5,11 +5,13 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain.SwerveDriveState;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.DoubleArrayPublisher;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StringPublisher;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -73,6 +75,11 @@ public class Telemetry {
             .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
     };
 
+    // WPILib
+    private final NetworkTable moduleStats = inst.getTable("Swerve");
+    StructArrayPublisher<SwerveModuleState> publisher = moduleStats.getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
+
+
     /* Accept the swerve drive state and telemeterize it to smartdashboard */
     public void telemeterize(SwerveDriveState state) {
         /* Telemeterize the pose */
@@ -98,13 +105,14 @@ public class Telemetry {
         velocityY.set(velocities.getY());
         odomPeriod.set(state.OdometryPeriod);
 
+        publisher.set(state.ModuleStates);
         /* Telemeterize the module's states */
-        for (int i = 0; i < 4; ++i) {
-            m_moduleSpeeds[i].setAngle(state.ModuleStates[i].angle);
-            m_moduleDirections[i].setAngle(state.ModuleStates[i].angle);
-            m_moduleSpeeds[i].setLength(state.ModuleStates[i].speedMetersPerSecond / (2 * MaxSpeed));
+        // for (int i = 0; i < 4; ++i) {
+        //     m_moduleSpeeds[i].setAngle(state.ModuleStates[i].angle.getDegrees());
+        //     m_moduleDirections[i].setAngle(state.ModuleStates[i].angle.getDegrees());
+        //     m_moduleSpeeds[i].setLength(state.ModuleStates[i].speedMetersPerSecond / (2 * MaxSpeed));
 
-            SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
-        }
+        //     SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
+        // }
     }
 }

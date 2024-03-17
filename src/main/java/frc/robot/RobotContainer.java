@@ -35,7 +35,7 @@ public class RobotContainer {
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
-  private final XboxController xbox2 = new XboxController(1);
+  private final CommandXboxController joystick2 = new CommandXboxController(1);
 
   private final Swerve drivetrain = TunerConstants.DriveTrain; // My drivetrain
   

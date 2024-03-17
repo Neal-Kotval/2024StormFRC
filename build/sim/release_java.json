@@ -1,21 +1,21 @@
 [
   {
     "type": "java",
-    "name": "jar (in project 2024StormFRCBeta)",
+    "name": "jar (in project 2024StormFRC)",
     "extensions": [
       {
         "name": "Sim GUI",
-        "libName": "/Users/nealkotval/2024StormFRCBeta/build/jni/release/libhalsim_gui.dylib",
+        "libName": "/Users/nealkotval/2024StormFRC/build/jni/release/libhalsim_gui.dylib",
         "defaultEnabled": true
       },
       {
         "name": "Use Real DriverStation",
-        "libName": "/Users/nealkotval/2024StormFRCBeta/build/jni/release/libhalsim_ds_socket.dylib",
+        "libName": "/Users/nealkotval/2024StormFRC/build/jni/release/libhalsim_ds_socket.dylib",
         "defaultEnabled": false
       }
     ],
     "environment": {},
-    "libraryDir": "/Users/nealkotval/2024StormFRCBeta/build/jni/release",
+    "libraryDir": "/Users/nealkotval/2024StormFRC/build/jni/release",
     "mainClassName": "frc.robot.Main"
   }
 ]

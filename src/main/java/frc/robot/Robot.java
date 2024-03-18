@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -14,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.TelescopingArm;
+
+import java.util.HashMap;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -27,23 +30,41 @@ public class Robot extends TimedRobot {
   private XboxController xbox;
 
   private Pigeon2 gyro = new Pigeon2(0);
+  private final HashMap<String, Pose2d> poseMap = new HashMap<>();
 
 
 
+
+  // @Override
+  // public void robotInit() {
+
+  //   m_robotContainer = new RobotContainer();
+  //   // Initialize subsystems
+  //   manip = new Manipulator();
+  //   arm = new TelescopingArm();
+  //   currArmTarget = 0;
+
+    
+  //   xbox = new XboxController(1);
+  //   gyro.setYaw(-gyro.getYaw().getValue());
+  // }
 
   @Override
   public void robotInit() {
+    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // autonomous chooser on the dashboard.
 
     m_robotContainer = new RobotContainer();
-    // Initialize subsystems
-    manip = new Manipulator();
-    arm = new TelescopingArm();
-    currArmTarget = 0;
 
-    
-    xbox = new XboxController(1);
-    gyro.setYaw(-gyro.getYaw().getValue());
+    poseMap.put("Unknown", Constants.PoseConstants.defaultPose);
+    poseMap.put("Blue1", Constants.PoseConstants.Blue1Pose);
+    poseMap.put("Blue2", Constants.PoseConstants.Blue2Pose);
+    poseMap.put("Blue3", Constants.PoseConstants.Blue3Pose);
+
   }
+
+
+  
 
   @Override
   public void robotPeriodic() {

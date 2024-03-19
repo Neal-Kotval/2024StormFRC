@@ -7,7 +7,7 @@ package frc.robot;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
+// import com.pathplanner.lib.auto.NamedCommands;
 // import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 
@@ -57,6 +57,8 @@ public class RobotContainer {
   public Trigger leftYAxisActiveDown = new Trigger(()->(joystick2.getLeftY()<-0.1));
   public Trigger rightYAxisActiveUp = new Trigger(()->(joystick2.getRightY()>0.1));
   public Trigger rightYAxisActiveDown = new Trigger(()->(joystick2.getRightY()<-0.1));
+  public Trigger leftBumper = new Trigger(joystick2.leftBumper());
+  public Trigger rightBumper = new Trigger(joystick2.rightBumper());
 
 
   private void configureBindings() {
@@ -90,6 +92,8 @@ public class RobotContainer {
     leftYAxisActiveDown.whileTrue(new TelescopeLeft(telescope, -0.2));
     rightYAxisActiveUp.whileTrue(new TelescopeRight(telescope, 0.2));
     rightYAxisActiveDown.whileTrue(new TelescopeRight(telescope, -0.2));
+    leftBumper.whileTrue(new PowerIntake(manipulator, -0.5));
+    rightBumper.whileTrue(new PowerIntake(manipulator, 0.5));
 
 
   }

@@ -77,6 +77,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    //telemetry
+    SmartDashboard.putNumber("Arm Target", currArmTarget);
+    SmartDashboard.putNumber("Arm", manip.get_arm_enc());
+    SmartDashboard.putNumber("Yaw", gyro.getYaw().getValue());
+    
     CommandScheduler.getInstance().run(); 
   }
 
@@ -115,13 +120,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic() {}
 
-    SmartDashboard.putNumber("Arm Target", currArmTarget);
-    SmartDashboard.putNumber("Arm", manip.get_arm_enc());
-    SmartDashboard.putNumber("Yaw", gyro.getYaw().getValue());
-  
-  }
   @Override
   public void teleopExit() {}
 

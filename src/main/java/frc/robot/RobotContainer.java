@@ -50,7 +50,8 @@ public class RobotContainer {
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
   // Triggers for Controller 2
-  public Trigger driverY = new Trigger(joystick2.y());
+  public Trigger operatorY = new Trigger(joystick2.y());
+  public Trigger operatorX = new Trigger(joystick2.x());
   public Trigger padUp = new Trigger(joystick2.povUp());
   public Trigger padDown = new Trigger(joystick2.povDown());
   public Trigger leftYAxisActiveUp = new Trigger(()->(joystick2.getLeftY()>0.1));
@@ -60,6 +61,7 @@ public class RobotContainer {
   public Trigger leftBumper = new Trigger(joystick2.leftBumper());
   public Trigger rightBumper = new Trigger(joystick2.rightBumper());
   public Trigger rightTrigger = new Trigger(()->(joystick2.getLeftTriggerAxis()>0.1));
+
 
 
   private void configureBindings() {
@@ -96,6 +98,7 @@ public class RobotContainer {
     leftBumper.whileTrue(new PowerIntake(manipulator, -0.5));
     rightBumper.whileTrue(new PowerIntake(manipulator, 0.5));
     rightTrigger.whileTrue(new PowerShoot(manipulator, 0.7));
+    operatorX.onTrue(new SetArm(manipulator, 0));
 
 
   }

@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class PowerIntake extends Command {
+public class PowerShoot extends Command {
 
     private Manipulator manipulator;
     private double power;
 
-    public PowerIntake(Manipulator manipulator, double power) {
+    public PowerShoot(Manipulator manipulator, double power) {
         this.manipulator = manipulator;
         this.power = power;
     }
@@ -23,7 +23,7 @@ public class PowerIntake extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        manipulator.intake(power);
+        manipulator.shoot(power);
     }
 
     // Called once the command ends or is interrupted.

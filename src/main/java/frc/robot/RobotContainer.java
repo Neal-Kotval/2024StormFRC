@@ -59,6 +59,7 @@ public class RobotContainer {
   public Trigger rightYAxisActiveDown = new Trigger(()->(joystick2.getRightY()<-0.1));
   public Trigger leftBumper = new Trigger(joystick2.leftBumper());
   public Trigger rightBumper = new Trigger(joystick2.rightBumper());
+  public Trigger rightTrigger = new Trigger(()->(joystick2.getLeftTriggerAxis()>0.1));
 
 
   private void configureBindings() {
@@ -94,6 +95,7 @@ public class RobotContainer {
     rightYAxisActiveDown.whileTrue(new TelescopeRight(telescope, -0.2));
     leftBumper.whileTrue(new PowerIntake(manipulator, -0.5));
     rightBumper.whileTrue(new PowerIntake(manipulator, 0.5));
+    rightTrigger.whileTrue(new PowerShoot(manipulator, 0.7));
 
 
   }

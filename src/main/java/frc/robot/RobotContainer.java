@@ -22,6 +22,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.generated.TunerConstants;
 import frc.robot.commands.*;
+import frc.robot.commands.Manipulator.ArmPos;
+import frc.robot.commands.Manipulator.AutoShoot;
+import frc.robot.commands.Manipulator.MoveArm;
+import frc.robot.commands.Manipulator.TimedIntake;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -29,10 +33,14 @@ public class RobotContainer {
   private double MaxAngularRate = 1. * Math.PI; // 3/4 of a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
-  private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
-  private final XboxController xbox2 = new XboxController(1);
+  private final CommandXboxController joystick = new CommandXboxController(0);
+  private final CommandXboxController joystick2 = new CommandXboxController(1);
+
+  /* Subsystems */
   private final Swerve drivetrain = TunerConstants.DriveTrain; // My drivetrain
   private final Manipulator manipulator = new Manipulator();
+
+
   private final SendableChooser<Command> autoChooser;
   
   
@@ -45,9 +53,9 @@ public class RobotContainer {
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
   // triggers
-  public Trigger driverY = new Trigger(()->xbox2.getYButton());
-  public Trigger padUp = new Trigger(()->(xbox2.getPOV()==0));
-  public Trigger padDown = new Trigger(()->(xbox2.getPOV()==180));
+  public Trigger driverY = new Trigger(joystick2.y());
+  public Trigger padUp = new Trigger(joystick2.povUp());
+  public Trigger padDown = new Trigger(joystick2.povDown());
 
   private void configureBindings() {
     
@@ -71,8 +79,8 @@ public class RobotContainer {
     }
     drivetrain.registerTelemetry(logger::telemeterize);
 
-    // Non-Swerve Bindings
-    // driverY.onTrue(new ArmPos(manipulator, 15));
+    
+
     padUp.whileTrue(new MoveArm(manipulator, Constants.armPower));
     padDown.whileTrue(new MoveArm(manipulator, -Constants.armPower));
 

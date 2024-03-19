@@ -1,29 +1,29 @@
-package frc.robot.commands;
+package frc.robot.commands.Manipulator;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class TimedIntake extends Command {
+public class AutoShoot extends Command {
 
     private Manipulator manipulator;
-    private double initialTime;
+    private double velocity;
 
-    public TimedIntake(Manipulator manipulator) {
+    public AutoShoot(Manipulator manipulator, double velocity) {
         this.manipulator = manipulator;
+        this.velocity = velocity;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        initialTime = Timer.getFPGATimestamp();
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        manipulator.intake(-0.7);
+        manipulator.velocityShooting(velocity);
     }
 
     // Called once the command ends or is interrupted.
@@ -35,7 +35,7 @@ public class TimedIntake extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (Timer.getFPGATimestamp()-initialTime) >= 3;
+        return (Math.abs(Constants.autoShootingVelocity-manipulator.getShootingVelocity()) <= 0.2);
     }
 
 }

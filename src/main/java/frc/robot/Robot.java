@@ -58,6 +58,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
 
+    manip = new Manipulator();
+    arm = new TelescopingArm();
+    currArmTarget = 0;
+
+
     m_robotContainer = new RobotContainer();
 
     poseMap.put("Unknown", Constants.PoseConstants.defaultPose);
@@ -112,38 +117,39 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    // //climb
-    // // arm.pull_l(xbox.getLeftY()*0.2);
-    // // arm.pull_r(-xbox.getRightY()*0.2);
+    // climb
+    arm.pull_l(xbox.getLeftY()*0.2);
+    arm.pull_r(-xbox.getRightY()*0.2);
 
 
-    // //shooting, amp-shooting
-    // if (xbox.getRightTriggerAxis() > 0.1) {
-    //         manip.shoot(-.7);
-    // }
-    // else if(xbox.getLeftTriggerAxis()>0.1){
-    //   manip.shoot(-.4);
-    // }
-    // else{
-    //   manip.shoot((0));
-    // }
+    //shooting, amp-shooting
+    if (xbox.getRightTriggerAxis() > 0.1) {
+            manip.shoot(-.7);
+    }
+    else if(xbox.getLeftTriggerAxis()>0.1){
+      manip.shoot(-.4);
+    }
+    else{
+      manip.shoot((0));
+    }
 
-    // //intake outtake
-    // if (xbox.getRightBumper()) {
-    //   manip.intake(-0.7);
-    // } else if (xbox.getLeftBumper()){
-    //   manip.intake(0.5);
-    // } else {
-    //   manip.intake(0);
-    // }
+    //intake outtake
+    if (xbox.getRightBumper()) {
+      manip.intake(-0.7);
+    } else if (xbox.getLeftBumper()){
+      manip.intake(0.5);
+    } else {
+      manip.intake(0);
+    }
 
-    // //zero arm encoder
-    // if (xbox.getXButton()) {
-    //   manip.setArmEncoder(0);
-    // }
-    // SmartDashboard.putNumber("Arm Target", currArmTarget);
-    // SmartDashboard.putNumber("Arm", manip.get_arm_enc());
-    // SmartDashboard.putNumber("Yaw", gyro.getYaw().getValue());
+    //zero arm encoder
+    if (xbox.getXButton()) {
+      manip.setArmEncoder(0);
+    }
+
+    SmartDashboard.putNumber("Arm Target", currArmTarget);
+    SmartDashboard.putNumber("Arm", manip.get_arm_enc());
+    SmartDashboard.putNumber("Yaw", gyro.getYaw().getValue());
 
 
   

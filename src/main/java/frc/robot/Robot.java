@@ -6,14 +6,19 @@ package frc.robot;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.TelescopingArm;
+
+import java.util.HashMap;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -27,23 +32,43 @@ public class Robot extends TimedRobot {
   private XboxController xbox;
 
   private Pigeon2 gyro = new Pigeon2(0);
+  private final HashMap<String, Pose2d> poseMap = new HashMap<>();
+  private final Swerve drivetrain = TunerConstants.DriveTrain;
+  private Pose2d initialPose;
 
 
 
+
+  // @Override
+  // public void robotInit() {
+
+  //   m_robotContainer = new RobotContainer();
+  //   // Initialize subsystems
+  //   manip = new Manipulator();
+  //   arm = new TelescopingArm();
+  //   currArmTarget = 0;
+
+    
+  //   xbox = new XboxController(1);
+  //   gyro.setYaw(-gyro.getYaw().getValue());
+  // }
 
   @Override
   public void robotInit() {
+    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // autonomous chooser on the dashboard.
 
     m_robotContainer = new RobotContainer();
-    // Initialize subsystems
-    manip = new Manipulator();
-    arm = new TelescopingArm();
-    currArmTarget = 0;
 
-    
-    xbox = new XboxController(1);
-    gyro.setYaw(-gyro.getYaw().getValue());
+    poseMap.put("Unknown", Constants.PoseConstants.defaultPose);
+    poseMap.put("Blue1", Constants.PoseConstants.Blue1Pose);
+    poseMap.put("Blue2", Constants.PoseConstants.Blue2Pose);
+    poseMap.put("Blue3", Constants.PoseConstants.Blue3Pose);
+
   }
+
+
+  
 
   @Override
   public void robotPeriodic() {
@@ -61,6 +86,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    initialPose = poseMap.get(DriverStation.getRawAllianceStation().toString());
+    drivetrain.seedFieldRelative(initialPose);
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
@@ -84,38 +112,38 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    //climb
-    arm.pull_l(xbox.getLeftY()*0.2);
-    arm.pull_r(-xbox.getRightY()*0.2);
+    // //climb
+    // // arm.pull_l(xbox.getLeftY()*0.2);
+    // // arm.pull_r(-xbox.getRightY()*0.2);
 
 
-    //shooting, amp-shooting
-    if (xbox.getRightTriggerAxis() > 0.1) {
-            manip.shoot(-.7);
-    }
-    else if(xbox.getLeftTriggerAxis()>0.1){
-      manip.shoot(-.4);
-    }
-    else{
-      manip.shoot((0));
-    }
+    // //shooting, amp-shooting
+    // if (xbox.getRightTriggerAxis() > 0.1) {
+    //         manip.shoot(-.7);
+    // }
+    // else if(xbox.getLeftTriggerAxis()>0.1){
+    //   manip.shoot(-.4);
+    // }
+    // else{
+    //   manip.shoot((0));
+    // }
 
-    //intake outtake
-    if (xbox.getRightBumper()) {
-      manip.intake(-0.7);
-    } else if (xbox.getLeftBumper()){
-      manip.intake(0.5);
-    } else {
-      manip.intake(0);
-    }
+    // //intake outtake
+    // if (xbox.getRightBumper()) {
+    //   manip.intake(-0.7);
+    // } else if (xbox.getLeftBumper()){
+    //   manip.intake(0.5);
+    // } else {
+    //   manip.intake(0);
+    // }
 
-    //zero arm encoder
-    if (xbox.getXButton()) {
-      manip.setArmEncoder(0);
-    }
-    SmartDashboard.putNumber("Arm Target", currArmTarget);
-    SmartDashboard.putNumber("Arm", manip.get_arm_enc());
-    SmartDashboard.putNumber("Yaw", gyro.getYaw().getValue());
+    // //zero arm encoder
+    // if (xbox.getXButton()) {
+    //   manip.setArmEncoder(0);
+    // }
+    // SmartDashboard.putNumber("Arm Target", currArmTarget);
+    // SmartDashboard.putNumber("Arm", manip.get_arm_enc());
+    // SmartDashboard.putNumber("Yaw", gyro.getYaw().getValue());
 
 
   

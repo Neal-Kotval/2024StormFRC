@@ -17,7 +17,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
+// import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 public class Manipulator extends SubsystemBase {
 
@@ -37,9 +37,9 @@ public class Manipulator extends SubsystemBase {
 
     private final TalonFXConfiguration openLoopConfig = new TalonFXConfiguration();
 
-    DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.armEncoder);
+    // DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.armEncoder);
 
-    private final double absolutePosition;
+    // private final double absolutePosition;
 
     public Manipulator() {
         
@@ -68,11 +68,11 @@ public class Manipulator extends SubsystemBase {
         rightArm.setNeutralMode(NeutralModeValue.Brake);
         intakeMotor.setNeutralMode(NeutralMode.Brake);
 
-        absolutePosition = armEncoder.getAbsolutePosition();
+        // absolutePosition = armEncoder.getAbsolutePosition();
 
         //keep in mind TalonFX rotations may be different than Through Bore rotations, shouldnt be problem but verify
-        leftArm.setPosition(absolutePosition);
-        rightArm.setPosition(absolutePosition);
+        // leftArm.setPosition(absolutePosition);
+        // rightArm.setPosition(absolutePosition);
     }
 
     public double get_arm_enc() {

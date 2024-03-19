@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.TelescopingArm;
+import frc.robot.subsystems.Telescope;
 
 import java.util.HashMap;
 
@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   private Manipulator manip;
-  private TelescopingArm arm;
+  private Telescope arm;
   private double currArmTarget;
 
   private XboxController xbox;
@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
 
     manip = new Manipulator();
-    arm = new TelescopingArm();
+    arm = new Telescope();
     currArmTarget = 0;
 
 

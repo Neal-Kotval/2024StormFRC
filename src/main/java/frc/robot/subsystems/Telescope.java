@@ -6,12 +6,12 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class TelescopingArm extends SubsystemBase{
+public class Telescope extends SubsystemBase{
     
     TalonFX LeftClimb = new TalonFX(Constants.LeftClimb);
     TalonFX RightClimb = new TalonFX(Constants.RightClimb);
     
-    public TelescopingArm() {
+    public Telescope() {
         // Configuration
         LeftClimb.setNeutralMode(NeutralModeValue.Brake);
         RightClimb.setNeutralMode(NeutralModeValue.Brake);

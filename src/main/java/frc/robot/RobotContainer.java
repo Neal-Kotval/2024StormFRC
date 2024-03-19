@@ -8,24 +8,20 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
+// import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.generated.TunerConstants;
-import frc.robot.commands.*;
-import frc.robot.commands.Manipulator.ArmPos;
-import frc.robot.commands.Manipulator.AutoShoot;
-import frc.robot.commands.Manipulator.MoveArm;
-import frc.robot.commands.Manipulator.TimedIntake;
+import frc.robot.commands.Manipulator.*;
+import frc.robot.commands.Telescope.*;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -39,6 +35,7 @@ public class RobotContainer {
   /* Subsystems */
   private final Swerve drivetrain = TunerConstants.DriveTrain; // My drivetrain
   private final Manipulator manipulator = new Manipulator();
+  private final Telescope telescope = new Telescope();
 
 
   private final SendableChooser<Command> autoChooser;
@@ -52,10 +49,15 @@ public class RobotContainer {
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
-  // triggers
+  // Triggers for Controller 2
   public Trigger driverY = new Trigger(joystick2.y());
   public Trigger padUp = new Trigger(joystick2.povUp());
   public Trigger padDown = new Trigger(joystick2.povDown());
+  public Trigger leftYAxisActiveUp = new Trigger(()->(joystick2.getLeftY()>0.1));
+  public Trigger leftYAxisActiveDown = new Trigger(()->(joystick2.getLeftY()<-0.1));
+  public Trigger rightYAxisActiveUp = new Trigger(()->(joystick2.getRightY()>0.1));
+  public Trigger rightYAxisActiveDown = new Trigger(()->(joystick2.getRightY()<-0.1));
+
 
   private void configureBindings() {
     
@@ -79,17 +81,23 @@ public class RobotContainer {
     }
     drivetrain.registerTelemetry(logger::telemeterize);
 
-    
+
 
     padUp.whileTrue(new MoveArm(manipulator, Constants.armPower));
     padDown.whileTrue(new MoveArm(manipulator, -Constants.armPower));
 
+    leftYAxisActiveUp.whileTrue(new TelescopeLeft(telescope, 0.2));
+    leftYAxisActiveDown.whileTrue(new TelescopeLeft(telescope, -0.2));
+    rightYAxisActiveUp.whileTrue(new TelescopeRight(telescope, 0.2));
+    rightYAxisActiveDown.whileTrue(new TelescopeRight(telescope, -0.2));
+
+
   }
 
   public void registerNamedCommands() {
-    NamedCommands.registerCommand("armToFloor", new ArmPos(manipulator, Constants.armFloorPosition));
-    NamedCommands.registerCommand("timedIntake", new TimedIntake(manipulator));
-    NamedCommands.registerCommand("autoShoot", new AutoShoot(manipulator, Constants.autoShootingVelocity));
+    // NamedCommands.registerCommand("armToFloor", new ArmPos(manipulator, Constants.armFloorPosition));
+    // NamedCommands.registerCommand("timedIntake", new TimedIntake(manipulator));
+    // NamedCommands.registerCommand("autoShoot", new AutoShoot(manipulator, Constants.autoShootingVelocity));
 
   }
 

@@ -8,10 +8,10 @@ import frc.robot.subsystems.*;
 
 
 public class TelescopeLeft extends Command {
-  private TelescopingArm arm;
+  private Telescope arm;
   private double power;
 
-  public TelescopeLeft(TelescopingArm arm, double power) {
+  public TelescopeLeft(Telescope arm, double power) {
     this.arm = arm;
     this.power = power;
 

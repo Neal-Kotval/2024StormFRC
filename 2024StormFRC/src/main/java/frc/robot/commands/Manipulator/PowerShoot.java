@@ -23,13 +23,13 @@ public class PowerShoot extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        manipulator.shoot(power);
+        manipulator.shoot(-power);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        
+        manipulator.shoot(0);
     }
 
     // Returns true when the command should end.

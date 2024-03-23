@@ -22,18 +22,15 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private Manipulator manip;
+
   private double currArmTarget;
 
-  private Pigeon2 gyro = new Pigeon2(0);
   private final HashMap<String, Pose2d> poseMap = new HashMap<>();
   private final Swerve drivetrain = TunerConstants.DriveTrain;
   private Pose2d initialPose;
 
   @Override
   public void robotInit() {
-
-    manip = new Manipulator();
     currArmTarget = 0;
 
     m_robotContainer = new RobotContainer();
@@ -47,8 +44,6 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     //telemetry
     SmartDashboard.putNumber("Arm Target", currArmTarget);
-    SmartDashboard.putNumber("Arm", manip.get_arm_enc());
-    SmartDashboard.putNumber("Yaw", gyro.getYaw().getValue());
     
     CommandScheduler.getInstance().run(); 
   }

@@ -1,21 +1,17 @@
 package frc.robot.subsystems;
 
+// import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-
-// import javax.swing.text.Position;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 // import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
@@ -30,16 +26,12 @@ public class Manipulator extends SubsystemBase {
     TalonFX rightShooter = new TalonFX(Constants.RightShooter);
 
     //intake
-    TalonSRX intakeMotor = new TalonSRX(Constants.Intake);
+    CANSparkMax intakeMotor = new CANSparkMax(Constants.Intake, MotorType.kBrushless);
 
     private final PositionVoltage positionRequest;
     private final VelocityVoltage velocityRequest;
 
     private final TalonFXConfiguration openLoopConfig = new TalonFXConfiguration();
-
-    // DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.armEncoder);
-
-    // private final double absolutePosition;
 
     public Manipulator() {
         
@@ -66,7 +58,7 @@ public class Manipulator extends SubsystemBase {
 
         leftArm.setNeutralMode(NeutralModeValue.Brake);
         rightArm.setNeutralMode(NeutralModeValue.Brake);
-        intakeMotor.setNeutralMode(NeutralMode.Brake);
+        // intakeMotor.setNeutralMode(NeutralMode.Brake);
 
         // absolutePosition = armEncoder.getAbsolutePosition();
 
@@ -93,7 +85,7 @@ public class Manipulator extends SubsystemBase {
     }
 
     public void intake(double power) {
-        intakeMotor.set(ControlMode.PercentOutput,power);
+        intakeMotor.set(power);
     }
 
 

@@ -33,7 +33,7 @@ public class ArmPos extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // manipulator.move_arm(0);
+    manipulator.move_arm(0);
   }
 
   // Returns true when the command should end.

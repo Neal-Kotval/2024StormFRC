@@ -22,19 +22,20 @@ public class TimedIntake extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        manipulator.intake(-0.7);
+        manipulator.intake(1);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        
+        manipulator.intake(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (Timer.getFPGATimestamp()-initialTime) >= 3;
+        return (Timer.getFPGATimestamp()-initialTime) >= 1;
+
     }
 
 }

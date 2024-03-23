@@ -13,7 +13,7 @@ public class PowerIntake extends Command {
         this.manipulator = manipulator;
         this.power = power;
     }
-
+//
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
@@ -29,7 +29,7 @@ public class PowerIntake extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        
+        manipulator.intake(0);
     }
 
     // Returns true when the command should end.

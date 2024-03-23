@@ -12,6 +12,25 @@
     "data": {
       "commands": [
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Blue1Straight"

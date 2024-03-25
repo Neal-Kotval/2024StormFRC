@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.generated.TunerConstants;
@@ -108,9 +109,7 @@ public class RobotContainer {
   }
 
   public void registerNamedCommands() {
-    NamedCommands.registerCommand("timedIntake", new TimedIntake(manipulator));
-    NamedCommands.registerCommand("timed", new AutoShoot(manipulator, Constants.autoShootingVelocity));
-
+    NamedCommands.registerCommand("timedIntake and timed shoot", new SequentialCommandGroup(new TimedIntake(manipulator),new AutoShoot(manipulator,Constants.autoShootingVelocity)));
   }
 
   public RobotContainer() {

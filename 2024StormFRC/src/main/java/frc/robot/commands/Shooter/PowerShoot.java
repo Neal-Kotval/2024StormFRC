@@ -1,4 +1,4 @@
-package frc.robot.commands.Manipulator;
+package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.Constants;
@@ -6,11 +6,11 @@ import frc.robot.subsystems.*;
 
 public class PowerShoot extends Command {
 
-    private Manipulator manipulator;
+    private Shooter shooter;
     private double power;
 
-    public PowerShoot(Manipulator manipulator, double power) {
-        this.manipulator = manipulator;
+    public PowerShoot(Shooter shooter, double power) {
+        this.shooter = shooter;
         this.power = power;
     }
 
@@ -23,13 +23,13 @@ public class PowerShoot extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        manipulator.shoot(-power);
+        shooter.shoot(-power);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        manipulator.shoot(0);
+        shooter.shoot(0);
     }
 
     // Returns true when the command should end.

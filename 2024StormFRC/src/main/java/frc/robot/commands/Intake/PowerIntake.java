@@ -1,19 +1,19 @@
-package frc.robot.commands.Manipulator;
+package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+// import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class AutoShoot extends Command {
+public class PowerIntake extends Command {
 
-    private Manipulator manipulator;
-    private double velocity;
+    private Intake intake;
+    private double power;
 
-    public AutoShoot(Manipulator manipulator, double velocity) {
-        this.manipulator = manipulator;
-        this.velocity = velocity;
+    public PowerIntake(Intake intake, double power) {
+        this.intake = intake;
+        this.power = power;
     }
-
+//
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
@@ -23,19 +23,19 @@ public class AutoShoot extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        manipulator.velocityShooting(velocity);
+        intake.intake(power);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        manipulator.shoot(0);
+        intake.intake(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (Math.abs(Constants.autoShootingVelocity-manipulator.getShootingVelocity()) <= 0.2);
+        return false;
     }
 
 }

@@ -23,7 +23,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.generated.TunerConstants;
+import frc.robot.commands.Intake.PowerIntake;
+import frc.robot.commands.Intake.TimedIntake;
 import frc.robot.commands.Manipulator.*;
+import frc.robot.commands.Shooter.PowerShoot;
+import frc.robot.commands.Shooter.TimedShoot;
 import frc.robot.commands.Telescope.*;
 import frc.robot.subsystems.*;
 
@@ -39,6 +43,8 @@ public class RobotContainer {
   private final Swerve drivetrain = TunerConstants.DriveTrain; // My drivetrain
   private final Manipulator manipulator = new Manipulator();
   private final Telescope telescope = new Telescope();
+  private final Intake intake = new Intake();
+  private final Shooter shooter = new Shooter();
 
 
   private final SendableChooser<Command> autoChooser;
@@ -99,12 +105,12 @@ public class RobotContainer {
     leftYAxisActiveDown.whileTrue(new TelescopeLeft(telescope, -0.2));
     rightYAxisActiveUp.whileTrue(new TelescopeRight(telescope, 0.2));
     rightYAxisActiveDown.whileTrue(new TelescopeRight(telescope, -0.2));
-    leftBumper.whileTrue(new PowerIntake(manipulator, -0.7));
-    rightBumper.whileTrue(new PowerIntake(manipulator, 0.7));
-    rightTrigger.whileTrue(new PowerShoot(manipulator, 0.7));
+    leftBumper.whileTrue(new PowerIntake(intake, -0.7));
+    rightBumper.whileTrue(new PowerIntake(intake, 0.7));
+    rightTrigger.whileTrue(new PowerShoot(shooter, 0.7));
     operatorX.onTrue(new SetArm(manipulator, 0));
     operatorY.onTrue(new ArmPos(manipulator, 16));
-    operatorA.onTrue(new TimedIntake(manipulator));
+    operatorA.onTrue(new TimedIntake(intake));
 
 
   }
@@ -112,7 +118,7 @@ public class RobotContainer {
 
 
   public RobotContainer() {
-    NamedCommands.registerCommand("timedIntake", new ParallelCommandGroup(new TimedIntake(manipulator), new TimedShoot(manipulator)) );
+    NamedCommands.registerCommand("timedIntake", new ParallelCommandGroup(new TimedIntake(intake), new TimedShoot(shooter)) );
     // NamedCommands.registerCommand("timedShoot", new TimedShoot(manipulator));
 
     autoChooser = AutoBuilder.buildAutoChooser();

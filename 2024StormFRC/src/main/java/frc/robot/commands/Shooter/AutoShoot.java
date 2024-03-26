@@ -1,41 +1,41 @@
-package frc.robot.commands.Manipulator;
+package frc.robot.commands.Shooter;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class TimedShoot extends Command {
+public class AutoShoot extends Command {
 
-    private Manipulator manipulator;
-    private double initialTime;
+    private Shooter shooter;
+    private double velocity;
 
-    public TimedShoot(Manipulator manipulator) {
-        this.manipulator = manipulator;
+    public AutoShoot(Shooter shooter, double velocity) {
+        this.shooter = shooter;
+        this.velocity = velocity;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        initialTime = Timer.getFPGATimestamp();
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        manipulator.shoot(-1);
+        shooter.velocityShooting(velocity);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        manipulator.shoot(0);
+        shooter.shoot(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (Timer.getFPGATimestamp()-initialTime) >= 2;
-
+        return (Math.abs(Constants.autoShootingVelocity-shooter.getShootingVelocity()) <= 0.2);
     }
 
 }

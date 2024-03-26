@@ -26,13 +26,13 @@ public class MoveArm extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    manipulator.move_arm(power);
+    manipulator.moveArm(power);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    manipulator.move_arm(0);
+    manipulator.moveArm(0);
   }
 
   // Returns true when the command should end.

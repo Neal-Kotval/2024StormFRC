@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 // import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -24,6 +25,8 @@ public class Manipulator extends SubsystemBase {
     //shooter a + b
     TalonFX leftShooter = new TalonFX(Constants.LeftShooter);
     TalonFX rightShooter = new TalonFX(Constants.RightShooter);
+
+    DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(Constants.AbsoluteEncoder);
 
     //intake
     CANSparkMax intakeMotor = new CANSparkMax(Constants.Intake, MotorType.kBrushless);
@@ -58,28 +61,24 @@ public class Manipulator extends SubsystemBase {
 
         leftArm.setNeutralMode(NeutralModeValue.Brake);
         rightArm.setNeutralMode(NeutralModeValue.Brake);
-        // intakeMotor.setNeutralMode(NeutralMode.Brake);
-
-        // absolutePosition = armEncoder.getAbsolutePosition();
-
-        //keep in mind TalonFX rotations may be different than Through Bore rotations, shouldnt be problem but verify
-        // leftArm.setPosition(absolutePosition);
-        // rightArm.setPosition(absolutePosition);
     }
 
-    public double get_arm_enc() {
-
+    public double getArmEncoder() {
        return  leftArm.getPosition().getValue();
+    }
 
+    public void offsetRelativeEncoder() {
+        leftArm.setPosition(getAbsoluteEncoder());
+        rightArm.setPosition(getAbsoluteEncoder());
     }
 
    
-    public void arm_to_pos(double pos) {
+    public void armToPosition(double pos) {
         leftArm.setControl(positionRequest.withPosition(pos));
         rightArm.setControl(positionRequest.withPosition(pos));
     }
 
-    public void move_arm(double power) {
+    public void moveArm(double power) {
         leftArm.set(power);
         rightArm.set(power);
     }
@@ -106,5 +105,9 @@ public class Manipulator extends SubsystemBase {
     public void setArmEncoder(double pos) {
         leftArm.setPosition(pos);
         rightArm.setPosition(pos);
+    }
+
+    public double getAbsoluteEncoder() {
+        return absoluteEncoder.getAbsolutePosition();
     }
 }

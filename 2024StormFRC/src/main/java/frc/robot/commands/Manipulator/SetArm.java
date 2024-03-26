@@ -35,7 +35,7 @@ public class SetArm extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (Math.abs(pos-manipulator.get_arm_enc()) <= 0.01);
+        return (Math.abs(pos-manipulator.getArmEncoder()) <= 0.01);
     }
 
 }

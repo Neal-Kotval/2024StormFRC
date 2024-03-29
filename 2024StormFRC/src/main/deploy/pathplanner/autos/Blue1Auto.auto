@@ -12,41 +12,21 @@
     "data": {
       "commands": [
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "setArm90"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "moveArmShoot"
-                }
-              },
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "timedIntake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "timedShoot"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
+            "name": "setArm90"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "moveArmShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "timedShoot"
           }
         }
       ]

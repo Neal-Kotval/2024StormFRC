@@ -116,6 +116,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("timedIntake", new TimedIntake(manipulator));
     NamedCommands.registerCommand("timedShoot", new TimedShoot(manipulator));
     NamedCommands.registerCommand("setArm90", new SetArm(manipulator, 90));
+    NamedCommands.registerCommand("parallelShoot", new ParallelCommandGroup(new TimedIntake(manipulator), new TimedShoot(manipulator)));
     NamedCommands.registerCommand("moveArmFloor", new ArmPos(manipulator, 0));
     NamedCommands.registerCommand("moveArmShoot", new ArmPos(manipulator,16));
 

@@ -19,7 +19,7 @@ public class Constants {
     public static final int Intake = 8;
 
 
-    public static final double armPower = 0.2;
+    public static final double armPower = 0.6;
   
     //Sensor CAN IDs
     public static final int armEncoder = 100;

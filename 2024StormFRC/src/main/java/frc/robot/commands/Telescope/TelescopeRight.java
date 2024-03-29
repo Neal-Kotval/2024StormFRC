@@ -16,7 +16,7 @@ public class TelescopeRight extends Command {
     this.power = power;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arm);
+  
   }
 
   // Called when the command is initially scheduled.

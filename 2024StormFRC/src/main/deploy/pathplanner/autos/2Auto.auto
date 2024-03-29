@@ -1,0 +1,62 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.45,
+      "y": 5.54
+    },
+    "rotation": 0.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "setArm90"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "moveArmShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "parallelShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "moveArmFloor"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Blue2Straight"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedIntake"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

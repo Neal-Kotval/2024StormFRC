@@ -12,47 +12,41 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "1note"
-          }
-        },
-        {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "Blue1Straight"
+                  "name": "setArm90"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
+                "data": {
+                  "name": "moveArmShoot"
+                }
+              },
+              {
+                "type": "parallel",
                 "data": {
                   "commands": [
                     {
                       "type": "named",
                       "data": {
-                        "name": "armpos2note"
+                        "name": "timedIntake"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "timedIntake"
+                        "name": "timedShoot"
                       }
                     }
                   ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "2note"
           }
         }
       ]

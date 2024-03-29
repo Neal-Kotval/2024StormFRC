@@ -37,7 +37,7 @@ public class RobotContainer {
 
   /* Subsystems */
   private final Swerve drivetrain = TunerConstants.DriveTrain; // My drivetrain
-  private final Manipulator manipulator = new Manipulator();
+  final Manipulator manipulator = new Manipulator();
   private final Telescope telescope = new Telescope();
 
 
@@ -112,8 +112,9 @@ public class RobotContainer {
 
 
   public RobotContainer() {
-    NamedCommands.registerCommand("timedIntake", new ParallelCommandGroup(new TimedIntake(manipulator), new TimedShoot(manipulator)) );
-    // NamedCommands.registerCommand("timedShoot", new TimedShoot(manipulator));
+    NamedCommands.registerCommand("1note", new SequentialCommandGroup(new SetArm(manipulator,90),new ArmPos(manipulator, 16), new ParallelCommandGroup(new TimedIntake(manipulator), new TimedShoot(manipulator)),new ArmPos(manipulator, 5)) );
+    NamedCommands.registerCommand("timedIntake", new TimedIntake(manipulator));
+    NamedCommands.registerCommand("2note", new SequentialCommandGroup(new ArmPos(manipulator,30),new TimedOutake(manipulator), new ParallelCommandGroup(new TimedIntake(manipulator), new TimedShoot(manipulator))))  ;
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);

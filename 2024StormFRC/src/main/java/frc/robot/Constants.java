@@ -23,7 +23,7 @@ public class Constants {
     public static final double armPower = 0.2;
   
     //Sensor CAN IDs
-    public static final int armEncoder = 100;
+    public static final int armEncoder = 0;
 
     //auto constants
     public static final double autoShootingVelocity = 2;

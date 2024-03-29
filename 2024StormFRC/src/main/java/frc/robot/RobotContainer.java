@@ -28,7 +28,7 @@ import frc.robot.commands.Telescope.*;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
-  private double MaxSpeed = 2.5; // kSpeedAt12VoltsMps desired top speed
+  private double MaxSpeed = 6; // kSpeedAt12VoltsMps desired top speed
   private double MaxAngularRate = 1. * Math.PI; // 3/4 of a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
@@ -104,7 +104,7 @@ public class RobotContainer {
     rightTrigger.whileTrue(new PowerShoot(manipulator, 0.7));
     operatorX.onTrue(new SetArm(manipulator, 0));
     operatorY.onTrue(new ArmPos(manipulator, 16));
-    operatorA.onTrue(new TimedIntake(manipulator));
+    operatorA.onTrue(new ArmPos(manipulator, Constants.armAmpPosition));
 
 
   }
@@ -112,6 +112,7 @@ public class RobotContainer {
 
 
   public RobotContainer() {
+
     NamedCommands.registerCommand("1note", new SequentialCommandGroup(new SetArm(manipulator,90),new ArmPos(manipulator, 16), new ParallelCommandGroup(new TimedIntake(manipulator), new TimedShoot(manipulator)),new ArmPos(manipulator, 5)) );
     NamedCommands.registerCommand("timedIntake", new TimedIntake(manipulator));
     NamedCommands.registerCommand("2note", new SequentialCommandGroup(new ArmPos(manipulator,30),new TimedOutake(manipulator), new ParallelCommandGroup(new TimedIntake(manipulator), new TimedShoot(manipulator))))  ;

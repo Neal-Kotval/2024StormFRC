@@ -20,7 +20,7 @@ public class Constants {
     public static final int AbsoluteEncoder = 0;
 
 
-    public static final double armPower = 0.2;
+    public static final double armPower = 0.6;
   
     //Sensor CAN IDs
     public static final int armEncoder = 0;
@@ -30,6 +30,7 @@ public class Constants {
 
     //Arm Positions
     public static final double armFloorPosition = 0;
+    public static final double armAmpPosition = 90;
 
     public static final class SwerveConstants {
         public static final double MaxSpeed = 6;

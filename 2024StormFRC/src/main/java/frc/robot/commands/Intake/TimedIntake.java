@@ -11,6 +11,7 @@ public class TimedIntake extends Command {
 
     public TimedIntake(Intake intake) {
         this.intake = intake;
+        addRequirements(intake);
     }
 
     // Called when the command is initially scheduled.

@@ -12,6 +12,8 @@ public class PowerIntake extends Command {
     public PowerIntake(Intake intake, double power) {
         this.intake = intake;
         this.power = power;
+
+        addRequirements(intake);
     }
 //
     // Called when the command is initially scheduled.

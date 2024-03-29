@@ -1,42 +1,41 @@
-package frc.robot.commands.Manipulator;
+package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-// import frc.robot.Constants;
-import frc.robot.subsystems.*;
 
-public class SetArm extends Command {
 
-    private Manipulator manipulator;
-    private double pos;
+public class Delay extends Command {
 
-    public SetArm(Manipulator manipulator, double pos) {
-        this.manipulator = manipulator;
-        this.pos = pos;
-        addRequirements(manipulator);
+    private double delayTime;
+    private double initialTime;
+
+    public Delay(double delayTime) {
+        this.delayTime = delayTime;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-
+        initialTime = Timer.getFPGATimestamp();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        manipulator.setArmEncoder(pos);
+
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        
+
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (Math.abs(pos-manipulator.get_arm_enc()) <= 0.01);
+        return (Timer.getFPGATimestamp()-initialTime) >= delayTime;
+
     }
 
 }

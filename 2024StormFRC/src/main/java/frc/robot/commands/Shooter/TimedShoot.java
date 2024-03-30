@@ -8,9 +8,11 @@ public class TimedShoot extends Command {
 
     private Shooter shooter;
     private double initialTime;
+    private double runTime;
 
-    public TimedShoot(Shooter shooter) {
+    public TimedShoot(Shooter shooter, double runTime) {
         this.shooter = shooter;
+        this.runTime = runTime;
     }
 
     // Called when the command is initially scheduled.
@@ -34,7 +36,7 @@ public class TimedShoot extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (Timer.getFPGATimestamp()-initialTime) >= 2;
+        return (Timer.getFPGATimestamp()-initialTime) >= runTime;
 
     }
 

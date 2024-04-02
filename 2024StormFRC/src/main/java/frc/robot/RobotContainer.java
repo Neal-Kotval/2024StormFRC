@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.mechanisms.swerve.utility.PhoenixPIDController;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 // import com.pathplanner.lib.auto.NamedCommands;
@@ -41,12 +42,15 @@ public class RobotContainer {
   private final CommandXboxController joystick = new CommandXboxController(0);
   private final CommandXboxController joystick2 = new CommandXboxController(1);
 
+
+
   /* Subsystems */
   private final Swerve drivetrain = TunerConstants.DriveTrain; // My drivetrain
   final Manipulator manipulator = new Manipulator();
   private final Telescope telescope = new Telescope();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
+  private final TargetCalcs m_Calcs = new TargetCalcs();
 
 
   private final SendableChooser<Command> autoChooser;
@@ -56,6 +60,14 @@ public class RobotContainer {
       .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
       .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
                                                                // driving in open loop
+
+
+  private final SwerveRequest.FieldCentricFacingAngle driveFaceinangle = new SwerveRequest.FieldCentricFacingAngle()
+      .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+      .withDriveRequestType(DriveRequestType.OpenLoopVoltage); 
+
+  private final PhoenixPIDController turnPID = new PhoenixPIDController(10, 0, .1); //3.2 (10, 1, 0.0);
+
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   private final Telemetry logger = new Telemetry(MaxSpeed);
@@ -79,12 +91,23 @@ public class RobotContainer {
   private void configureBindings() {
     
     /*Swerve Bindings */
-    drivetrain.setDefaultCommand(
-        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
-                                                                                           // negative Y (forward)
-            .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-            .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-        ));
+    drivetrain.setDefaultCommand
+    (
+      drivetrain.applyRequest(() -> drive.withVelocityX(-Math.pow(joystick.getLeftY(),3) * MaxSpeed)
+      .withVelocityY(-Math.pow(joystick.getLeftX(),3) * MaxSpeed) // Drive left with negative X (left)
+      .withRotationalRate(Math.pow(-joystick.getRightX(),3) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+      ).ignoringDisable(true));
+
+    driveFaceinangle.HeadingController = turnPID;
+    driveFaceinangle.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
+
+    joystick.rightStick().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(-Math.pow(joystick.getLeftY(),3) * MaxSpeed)
+.withVelocityY(-Math.pow(joystick.getLeftX(),3) * MaxSpeed).withTargetDirection(m_Calcs.AbsRotationToTag(m_Calcs.TargetID,drivetrain.getrobotpose()).minus(drivetrain.Getoffsetroation()))));
+
+
+
+
+    
 
     joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
     joystick.b().whileTrue(drivetrain

@@ -75,8 +75,8 @@ return distFT;
 
 
 
-public Rotation2d AbsRotationToTag(int TagId, Pose2d RobotPose2D){
-  Pose2d TagPose = GetApriltagePose(TagId);
+public Rotation2d AbsRotationToTag( Pose2d RobotPose2D){
+  Pose2d TagPose = GetApriltagePose(7);
 Pose2d RoboPose = RobotPose2D;
 Translation2d targeTranslation2d = TagPose.getTranslation();
 Translation2d relativeTranslation = targeTranslation2d.minus(RoboPose.getTranslation());

@@ -26,7 +26,7 @@ public class TelescopeRight extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.pull_r(power);
+    arm.pull_r(-power);
   }
 
   // Called once the command ends or is interrupted.

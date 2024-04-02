@@ -36,6 +36,7 @@ import frc.robot.commands.Alignments;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
+ 
   private double MaxSpeed = 4;
   ; // kSpeedAt12VoltsMps desired top speed
   private double MaxAngularRate = 1 * Math.PI; // 3/4 of a rotation per second max angular velocity
@@ -68,7 +69,7 @@ public class RobotContainer {
       .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
       .withDriveRequestType(DriveRequestType.OpenLoopVoltage); 
 
-  private final PhoenixPIDController turnPID = new PhoenixPIDController(10, 0, .1); //3.2 (10, 1, 0.0);
+  private final PhoenixPIDController turnPID = new PhoenixPIDController(0.3, 0,0 ); //3.2 (10, 1, 0.0);
 
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -94,8 +95,9 @@ public class RobotContainer {
   public Trigger leftBumper = new Trigger(joystick2.leftBumper());
   public Trigger rightBumper = new Trigger(joystick2.rightBumper());
   public Trigger rightTrigger = new Trigger(()->(joystick2.getRightTriggerAxis()>0.1));
+    public Trigger leftTrigger = new Trigger(()->(joystick2.getRightTriggerAxis()>0.1));
+  public Trigger operatorB = new Trigger(joystick2.b());
   
-
 
 
   private void configureBindings() {
@@ -104,15 +106,17 @@ public class RobotContainer {
     drivetrain.setDefaultCommand
     (
       drivetrain.applyRequest(() -> drive.withVelocityX(-Math.pow(joystick.getLeftY(),3) * MaxSpeed)
-      .withVelocityY(-Math.pow(joystick.getLeftX(),3) * MaxSpeed) // Drive left with negative X (left)
-      .withRotationalRate(Math.pow(-joystick.getRightX(),3) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+      .withVelocityY(-Math.pow(joystick.getLeftX(),7) * MaxSpeed) // Drive left with negative X (left)
+      .withRotationalRate(Math.pow(-joystick.getRightX(),7) * MaxAngularRate) // Drive counterclockwise with negative X (left)
       ).ignoringDisable(true));
 
     driveFaceinangle.HeadingController = turnPID;
     driveFaceinangle.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
-
-    joystick.rightStick().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(-Math.pow(joystick.getLeftY(),3) * MaxSpeed)
-.withVelocityY(-Math.pow(joystick.getLeftX(),3) * MaxSpeed).withTargetDirection(m_Calcs.AbsRotationToTag(m_Calcs.TargetID,drivetrain.getrobotpose()).minus(drivetrain.Getoffsetroation()))));
+    Translation2d translation = new Translation2d(5,4);
+  Rotation2d rotation = new Rotation2d(90);
+  Pose2d pose = new Pose2d(translation, rotation );
+    joystick.x().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(-Math.pow(joystick.getLeftY(),3) * MaxSpeed)
+.withVelocityY(-Math.pow(joystick.getLeftX(),3) * MaxSpeed).withTargetDirection(rotation)).until(joystick.a()));
 
 
 
@@ -145,11 +149,12 @@ public class RobotContainer {
     rightYAxisActiveDown.whileTrue(new TelescopeRight(telescope, -0.2));
     leftBumper.whileTrue(new PowerIntake(intake, -0.7));
     rightBumper.whileTrue(new PowerIntake(intake, 0.7));
-    rightTrigger.whileTrue(new PowerShoot(shooter, 0.7));
+    rightTrigger.whileTrue(new PowerShoot(shooter, -0.7));
+    leftTrigger.whileTrue(new PowerShoot(shooter, 0.1));
     operatorX.onTrue(new SetArm(manipulator, 0));
-    operatorY.onTrue(new ArmPos(manipulator, 18));
+    operatorY.onTrue(new ArmPos(manipulator, 24));
     operatorA.onTrue(new ParallelCommandGroup(new SequentialCommandGroup(new Delay(1), new TimedIntake(intake)), new TimedShoot(shooter,2)));
-
+    operatorB.onTrue(new SetArm(manipulator, 2));
 
   }
 

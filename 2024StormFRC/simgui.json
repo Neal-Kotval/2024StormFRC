@@ -1,6 +1,11 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "CANCoder (v6)[23]": {
+        "header": {
+          "open": true
+        }
+      },
       "Talon FX (v6)[11]": {
         "header": {
           "open": true
@@ -12,6 +17,11 @@
         }
       },
       "Talon FX (v6)[14]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[16]": {
         "header": {
           "open": true
         }
@@ -57,7 +67,18 @@
       }
     }
   },
+  "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    }
+  },
   "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
     "visible": true
   }
 }

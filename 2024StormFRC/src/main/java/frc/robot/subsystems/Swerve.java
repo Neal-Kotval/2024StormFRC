@@ -136,7 +136,7 @@ public Rotation2d Getoffsetroation(){
    return this.m_fieldRelativeOffset;
 }
  
-    public static Command ampAlign(){
+    public Command ampAlign(){
         return AutoBuilder.pathfindThenFollowPath(
             PathPlannerPath.fromPathFile("amp-align"),
             constraints,
@@ -145,14 +145,14 @@ public Rotation2d Getoffsetroation(){
    
     }
 
-    public static Command sourceAlign(){
+    public Command sourceAlign(){
         Pose2d pose = new Pose2d(14,1.1, Rotation2d.fromDegrees(180));
         pose = AllianceFlip.apply(pose);
         return AutoBuilder.pathfindToPose(pose,constraints,0);
 
     }
 
-    public static Command speakerAlign(){
+    public Command speakerAlign(){
         Pose2d pose = new Pose2d(1.75,FieldConstants.Speaker.centerSpeakerOpening.getY(), Rotation2d.fromDegrees(180));
         pose = AllianceFlip.apply(pose);
         return AutoBuilder.pathfindToPose(pose,constraints,0);

@@ -42,7 +42,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "amp-align"
+                  "pathName": "2Straight"
                 }
               },
               {
@@ -52,6 +52,24 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2Straight1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "moveArmShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "parallelShoot"
           }
         }
       ]

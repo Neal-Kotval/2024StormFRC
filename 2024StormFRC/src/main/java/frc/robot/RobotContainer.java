@@ -159,7 +159,7 @@ public class RobotContainer {
     leftTrigger.whileTrue(new PowerShoot(shooter, 0.1));
     operatorX.onTrue(new SetArm(manipulator, 0));
     operatorY.onTrue(new ArmPos(manipulator, 24));
-    operatorA.onTrue(new ParallelCommandGroup(new SequentialCommandGroup(new Delay(1), new TimedIntake(intake)), new TimedShoot(shooter,2)));
+    operatorA.onTrue(new ParallelCommandGroup(new SequentialCommandGroup(new Delay(1), new TimedIntake(intake,1)), new TimedShoot(shooter,2)));
     operatorB.onTrue(new SetArm(manipulator, 2));
 
   }
@@ -167,10 +167,10 @@ public class RobotContainer {
 
 
   public RobotContainer() {
-    NamedCommands.registerCommand("timedIntake", new TimedIntake(intake));
+    NamedCommands.registerCommand("timedIntake", new TimedIntake(intake,4));
     NamedCommands.registerCommand("timeD", new TimedShoot(shooter,2));
     NamedCommands.registerCommand("setArm90", new SetArm(manipulator, 90));
-    NamedCommands.registerCommand("parallelShoot", new ParallelCommandGroup(new SequentialCommandGroup(new Delay(2), new TimedIntake(intake)), new TimedShoot(shooter,4)));
+    NamedCommands.registerCommand("parallelShoot", new ParallelCommandGroup(new SequentialCommandGroup(new Delay(2), new TimedIntake(intake,1)), new TimedShoot(shooter,4)));
     NamedCommands.registerCommand("moveArmFloor", new ArmPos(manipulator, 0).withTimeout(1));
     NamedCommands.registerCommand("moveArmShoot", new ArmPos(manipulator,16).withTimeout(1));
    

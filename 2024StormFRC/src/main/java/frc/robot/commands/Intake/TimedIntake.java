@@ -9,8 +9,9 @@ public class TimedIntake extends Command {
     private Intake intake;
     private double initialTime;
 
-    public TimedIntake(Intake intake) {
+    public TimedIntake(Intake intake,double initialTime ) {
         this.intake = intake;
+        this.initialTime =initialTime;
         addRequirements(intake);
     }
 

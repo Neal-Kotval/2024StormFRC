@@ -11,16 +11,23 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.FieldConstants;
+import frc.robot.Util.AllianceFlip;
 import frc.robot.generated.TunerConstants;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -33,6 +40,12 @@ public class Swerve extends SwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
+    static  PathConstraints constraints = new PathConstraints(4.5, 3.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
+
+    static  PathConstraints slowConstraints = new PathConstraints(0.25, 3.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
+    
+    private final Field2d m_feild = new Field2d();
+
 
     private final SwerveRequest.ApplyChassisSpeeds AutoRequest = new SwerveRequest.ApplyChassisSpeeds();
 
@@ -103,9 +116,18 @@ public class Swerve extends SwerveDrivetrain implements Subsystem {
         });
         m_simNotifier.startPeriodic(kSimLoopPeriod);
     }
- public Pose2d getrobotpose(){
+  public void periodic(){
+        
+        SmartDashboard.putString("NOTETEST", this.m_requestToApply.toString());
 
-    return m_odometry.getEstimatedPosition();
+        m_feild.setRobotPose(getrobotpose());
+        SmartDashboard.putData("Feild", m_feild);
+    }
+
+
+    public Pose2d getrobotpose(){
+
+return m_odometry.getEstimatedPosition();
 
 
     }
@@ -113,5 +135,26 @@ public Rotation2d Getoffsetroation(){
 
    return this.m_fieldRelativeOffset;
 }
+ 
+    public static Command ampAlign(){
+        return AutoBuilder.pathfindThenFollowPath(
+            PathPlannerPath.fromPathFile("amp-align"),
+            constraints,
+            0
+    );
+   
+    }
 
+    public static Command sourceAlign(){
+        Pose2d pose = new Pose2d(14,1.1, Rotation2d.fromDegrees(180));
+        pose = AllianceFlip.apply(pose);
+        return AutoBuilder.pathfindToPose(pose,constraints,0);
+
+    }
+
+    public static Command speakerAlign(){
+        Pose2d pose = new Pose2d(1.75,FieldConstants.Speaker.centerSpeakerOpening.getY(), Rotation2d.fromDegrees(180));
+        pose = AllianceFlip.apply(pose);
+        return AutoBuilder.pathfindToPose(pose,constraints,0);
+    }
 }

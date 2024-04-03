@@ -6,12 +6,72 @@
           "open": true
         }
       },
+      "Talon FX (v6)[11]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[11]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[11]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      },
       "Talon FX (v6)[12]/Fwd Limit": {
         "header": {
           "open": true
         }
       },
+      "Talon FX (v6)[13]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[14]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
       "Talon FX (v6)[16]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[17]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[2]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[3]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[5]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[6]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[7]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[7]/Rotor Sensor": {
         "header": {
           "open": true
         }
@@ -23,6 +83,7 @@
       "/FMSInfo": "FMSInfo",
       "/Pose": "Field2d",
       "/SmartDashboard/Auto Chooser": "String Chooser",
+      "/SmartDashboard/Feild": "Field2d",
       "/SmartDashboard/Module 0": "Mechanism2d",
       "/SmartDashboard/Module 1": "Mechanism2d",
       "/SmartDashboard/Module 2": "Mechanism2d",
@@ -52,6 +113,9 @@
       "open": true
     },
     "Connections": {
+      "open": true
+    },
+    "DartClient_99068248@1": {
       "open": true
     },
     "Server": {

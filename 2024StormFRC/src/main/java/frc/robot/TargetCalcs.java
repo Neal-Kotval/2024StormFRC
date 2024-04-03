@@ -4,11 +4,10 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.VecBuilder;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -36,7 +35,12 @@ private Pose2d TCUPose2d;
 
 public TargetCalcs(){
 
-
+    try {
+        Layout = new AprilTagFieldLayout(Constants.APRILTAG_FIELD_LAYOUT_PATH);
+      } catch (IOException e) {
+        Layout = new AprilTagFieldLayout(new ArrayList<>(), 16.4592, 8.2296);
+      }
+  
 
 
 } 
@@ -75,8 +79,8 @@ return distFT;
 
 
 
-public Rotation2d AbsRotationToTag( Pose2d RobotPose2D){
-  Pose2d TagPose = GetApriltagePose(7);
+public Rotation2d AbsRotationToTag( int TagID, Pose2d RobotPose2D){
+  Pose2d TagPose = GetApriltagePose(TagID);
 Pose2d RoboPose = RobotPose2D;
 Translation2d targeTranslation2d = TagPose.getTranslation();
 Translation2d relativeTranslation = targeTranslation2d.minus(RoboPose.getTranslation());

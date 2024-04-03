@@ -19,10 +19,12 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.generated.TunerConstants;
 import frc.robot.commands.Delay;
@@ -69,15 +71,14 @@ public class RobotContainer {
       .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
       .withDriveRequestType(DriveRequestType.OpenLoopVoltage); 
 
-  private final PhoenixPIDController turnPID = new PhoenixPIDController(0.3, 0,0 ); //3.2 (10, 1, 0.0);
+  private final PhoenixPIDController turnPID = new PhoenixPIDController(0.3, 0,4 ); //3.2 (10, 1, 0.0);
 
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
-  public Trigger driverY = new Trigger(joystick.y());
-  public Trigger driverX = new Trigger(joystick.a());
-  public Trigger driverA = new Trigger(joystick.y());
+  public Trigger driverY = new Trigger(joystick.leftBumper());
+
 
    
 
@@ -86,8 +87,11 @@ public class RobotContainer {
   public Trigger operatorY = new Trigger(joystick2.y());
   public Trigger operatorX = new Trigger(joystick2.x());
   public Trigger operatorA = new Trigger(joystick2.a());
+  public Trigger operatorB = new Trigger(joystick2.b());
   public Trigger padUp = new Trigger(joystick2.povUp());
   public Trigger padDown = new Trigger(joystick2.povDown());
+  public Trigger padLeft = new Trigger(joystick2.povLeft());
+  public Trigger padRight = new Trigger(joystick2.povRight());
   public Trigger leftYAxisActiveUp = new Trigger(()->(joystick2.getLeftY()>0.1));
   public Trigger leftYAxisActiveDown = new Trigger(()->(joystick2.getLeftY()<-0.1));
   public Trigger rightYAxisActiveUp = new Trigger(()->(joystick2.getRightY()>0.1));
@@ -95,8 +99,10 @@ public class RobotContainer {
   public Trigger leftBumper = new Trigger(joystick2.leftBumper());
   public Trigger rightBumper = new Trigger(joystick2.rightBumper());
   public Trigger rightTrigger = new Trigger(()->(joystick2.getRightTriggerAxis()>0.1));
-    public Trigger leftTrigger = new Trigger(()->(joystick2.getRightTriggerAxis()>0.1));
-  public Trigger operatorB = new Trigger(joystick2.b());
+  public Trigger leftTrigger = new Trigger(()->(joystick2.getRightTriggerAxis()>0.1));
+ 
+
+  
   
 
 
@@ -112,13 +118,12 @@ public class RobotContainer {
 
     driveFaceinangle.HeadingController = turnPID;
     driveFaceinangle.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
-    Translation2d translation = new Translation2d(5,4);
-  Rotation2d rotation = new Rotation2d(90);
-  Pose2d pose = new Pose2d(translation, rotation );
+  
     joystick.x().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(-Math.pow(joystick.getLeftY(),3) * MaxSpeed)
-.withVelocityY(-Math.pow(joystick.getLeftX(),3) * MaxSpeed).withTargetDirection(rotation)).until(joystick.a()));
+    .withVelocityY(-Math.pow(joystick.getLeftX(),3) * MaxSpeed).withTargetDirection(m_Calcs.AbsRotationToTag(m_Calcs.TargetID,drivetrain.getrobotpose()).minus(drivetrain.Getoffsetroation()))).until(joystick.a()));
 
-
+    joystick.rightBumper().whileTrue(
+           Commands.deferredProxy(() -> Swerve.speakerAlign()));
 
 
     
@@ -142,6 +147,8 @@ public class RobotContainer {
     //operator
     padUp.whileTrue(new MoveArm(manipulator, Constants.armPower));
     padDown.whileTrue(new MoveArm(manipulator, -Constants.armPower));
+    padLeft.whileTrue(new SetSpeed(manipulator,2));
+    padRight.whileTrue(new SetSpeed(manipulator,-2));
 
     leftYAxisActiveUp.whileTrue(new TelescopeLeft(telescope, 0.2));
     leftYAxisActiveDown.whileTrue(new TelescopeLeft(telescope, -0.2));

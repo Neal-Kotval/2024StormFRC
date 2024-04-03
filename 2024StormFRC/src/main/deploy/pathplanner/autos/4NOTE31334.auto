@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.33,
+      "y": 5.57
+    },
+    "rotation": 0.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2Straight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2Straight1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Get3Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Get2Note"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

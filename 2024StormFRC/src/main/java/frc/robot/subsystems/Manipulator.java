@@ -146,9 +146,9 @@ public class Manipulator extends SubsystemBase {
     }
 
     public void move_arm(double power) {
-        // leftArm.set(power);
-        // rightArm.set(power);
-        leftArm.setControl(velocityRequest.withVelocity(power).withFeedForward(0.5));
+        leftArm.set(power);
+        rightArm.set(power);
+        // leftArm.setControl(velocityRequest.withVelocity(power).withFeedForward(0.5));
 
 
 

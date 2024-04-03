@@ -118,8 +118,8 @@ public class RobotContainer {
     driveFaceinangle.HeadingController = turnPID;
     driveFaceinangle.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
   
-    joystick.x().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(-Math.pow(joystick.getLeftY(),3) * MaxSpeed)
-    .withVelocityY(-Math.pow(joystick.getLeftX(),3) * MaxSpeed).withTargetDirection(m_Calcs.AbsRotationToTag(m_Calcs.TargetID,drivetrain.getrobotpose()).minus(drivetrain.Getoffsetroation()))).until(joystick.a()));
+    joystick.x().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(0)
+    .withVelocityY(0).withTargetDirection(m_Calcs.AbsRotationToTag(m_Calcs.TargetID,drivetrain.getrobotpose()).minus(drivetrain.Getoffsetroation()))));
 
     joystick.rightBumper().onTrue(
            Commands.deferredProxy(() -> drivetrain.speakerAlign()));

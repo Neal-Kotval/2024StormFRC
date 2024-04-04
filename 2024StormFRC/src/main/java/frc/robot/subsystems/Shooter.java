@@ -19,9 +19,10 @@ public class Shooter extends SubsystemBase {
     
 
     public Shooter() {
+        
+        velocityRequest = new VelocityVoltage(0).withSlot(0);
         rightShooter.setNeutralMode(NeutralModeValue.Brake);
         leftShooter.setNeutralMode(NeutralModeValue.Brake);
-        velocityRequest = new VelocityVoltage(0).withSlot(0);
         
 
     }

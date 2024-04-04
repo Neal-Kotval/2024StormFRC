@@ -55,6 +55,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "timedOutake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "2Straight1"

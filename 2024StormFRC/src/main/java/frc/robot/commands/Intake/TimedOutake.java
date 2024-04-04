@@ -4,14 +4,14 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class TimedIntake extends Command {
+public class TimedOutake extends Command {
 
     private Intake intake;
     private double initialTime;
 
-    public TimedIntake(Intake intake,double initialTime ) {
+    public TimedOutake(Intake intake ) {
         this.intake = intake;
-        this.initialTime =initialTime;
+        
         addRequirements(intake);
     }
 
@@ -24,7 +24,7 @@ public class TimedIntake extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intake.intake(0.5);
+        intake.intake(-1);
     }
 
     // Called once the command ends or is interrupted.
@@ -36,7 +36,7 @@ public class TimedIntake extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (Timer.getFPGATimestamp()-initialTime) >= 1;
+        return (Timer.getFPGATimestamp()-initialTime) >= 0.1;
 
     }
 

@@ -21,11 +21,11 @@ public class Manipulator extends SubsystemBase {
     TalonFX rightArm = new TalonFX(Constants.RightArm);
 
     
-    private DutyCycleOut m_DutyCycle = new DutyCycleOut(0);
+    // private DutyCycleOut m_DutyCycle = new DutyCycleOut(0);
    
-    private final CurrentLimitsConfigs m_currentLimits = new CurrentLimitsConfigs();
+    // private final CurrentLimitsConfigs m_currentLimits = new CurrentLimitsConfigs();
 
-    private final double MaxCurrent;
+    // private final double MaxCurrent;
 
     private final PositionVoltage positionRequest;
 
@@ -35,11 +35,12 @@ public class Manipulator extends SubsystemBase {
     
 
     public Manipulator() {
+      
         
         openLoopConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.25;
         openLoopConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.25;
 
-        MaxCurrent = Constants.Arm.MAX_CURRENT_DRAW;
+        // MaxCurrent = Constants.Arm.MAX_CURRENT_DRAW;
 
         leftArm.getConfigurator().apply(openLoopConfig);
         rightArm.getConfigurator().apply(openLoopConfig);
@@ -59,81 +60,81 @@ public class Manipulator extends SubsystemBase {
         
 
         leftArm.setInverted(true);
-
-        leftArm.setNeutralMode(NeutralModeValue.Brake);
-        rightArm.setNeutralMode(NeutralModeValue.Brake);
+      leftArm.setNeutralMode(NeutralModeValue.Brake);
+      rightArm.setNeutralMode(NeutralModeValue.Brake);
+        
     }
 
     
-    public void ConfigPivotCurrent(){
+    // public void ConfigPivotCurrent(){
 
-        TalonFXConfiguration toConfigure = new TalonFXConfiguration();
+    //     TalonFXConfiguration toConfigure = new TalonFXConfiguration();
         
-            if (MaxCurrent >= 5){
-              //PivotMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,Constants.Arm.MAX_CURRENT_DRAW,Constants.Arm.MAX_CURRENT_DRAW + 5, 0.5));
+    //         if (MaxCurrent >= 5){
+    //           //PivotMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,Constants.Arm.MAX_CURRENT_DRAW,Constants.Arm.MAX_CURRENT_DRAW + 5, 0.5));
         
-            m_currentLimits.SupplyCurrentLimit = Constants.Arm.MAX_CURRENT_DRAW ; // Limit to 1 amps
-            m_currentLimits.SupplyCurrentThreshold = Constants.Arm.MAX_CURRENT_DRAW + 5; // If we exceed 4 amps
-            m_currentLimits.SupplyTimeThreshold = .5; // For at least 1 second
-            m_currentLimits.SupplyCurrentLimitEnable = true; // And enable it
+    //         m_currentLimits.SupplyCurrentLimit = Constants.Arm.MAX_CURRENT_DRAW ; // Limit to 1 amps
+    //         m_currentLimits.SupplyCurrentThreshold = Constants.Arm.MAX_CURRENT_DRAW + 5; // If we exceed 4 amps
+    //         m_currentLimits.SupplyTimeThreshold = .5; // For at least 1 second
+    //         m_currentLimits.SupplyCurrentLimitEnable = true; // And enable it
         
-            m_currentLimits.StatorCurrentLimit = 25; // Limit stator to 20 amps
-            m_currentLimits.StatorCurrentLimitEnable = true; // And enable it
-        
-            
-        
-            toConfigure.CurrentLimits = m_currentLimits;
-        
-            toConfigure.SoftwareLimitSwitch.withForwardSoftLimitThreshold(245.0);
-            toConfigure.SoftwareLimitSwitch.withReverseSoftLimitThreshold(-2);
-            toConfigure.SoftwareLimitSwitch.withForwardSoftLimitEnable(false);
-            toConfigure.SoftwareLimitSwitch.withReverseSoftLimitEnable(false);
-            toConfigure.HardwareLimitSwitch.withForwardLimitEnable(true);
-              toConfigure.HardwareLimitSwitch.withReverseLimitEnable(true); 
-              toConfigure.HardwareLimitSwitch.withReverseLimitAutosetPositionValue(0);
-              toConfigure.HardwareLimitSwitch.withReverseLimitAutosetPositionEnable(true);
-        
-        
-            //toConfigure.MotorOutput.withMotorOutput(NeutralMode.Brake);
-            
-        
-            leftArm.getConfigurator().apply(toConfigure);
-            rightArm.getConfigurator().apply(toConfigure);
+    //         m_currentLimits.StatorCurrentLimit = 25; // Limit stator to 20 amps
+    //         m_currentLimits.StatorCurrentLimitEnable = true; // And enable it
         
             
         
+    //         toConfigure.CurrentLimits = m_currentLimits;
         
-          }
+    //         toConfigure.SoftwareLimitSwitch.withForwardSoftLimitThreshold(245.0);
+    //         toConfigure.SoftwareLimitSwitch.withReverseSoftLimitThreshold(-2);
+    //         toConfigure.SoftwareLimitSwitch.withForwardSoftLimitEnable(false);
+    //         toConfigure.SoftwareLimitSwitch.withReverseSoftLimitEnable(false);
+    //         toConfigure.HardwareLimitSwitch.withForwardLimitEnable(true);
+    //           toConfigure.HardwareLimitSwitch.withReverseLimitEnable(true); 
+    //           toConfigure.HardwareLimitSwitch.withReverseLimitAutosetPositionValue(0);
+    //           toConfigure.HardwareLimitSwitch.withReverseLimitAutosetPositionEnable(true);
+        
+        
+    //         //toConfigure.MotorOutput.withMotorOutput(NeutralMode.Brake);
+            
+        
+    //         leftArm.getConfigurator().apply(toConfigure);
+    //         rightArm.getConfigurator().apply(toConfigure);
+        
+            
+        
+        
+    //       }
         
               
-              else{
-               // PivotMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(false,40,10,1));
+    //           else{
+    //            // PivotMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(false,40,10,1));
               
         
-                m_currentLimits.StatorCurrentLimitEnable = true;
-                 m_currentLimits.SupplyCurrentLimitEnable = true;
-                 toConfigure.CurrentLimits = m_currentLimits;
+    //             m_currentLimits.StatorCurrentLimitEnable = true;
+    //              m_currentLimits.SupplyCurrentLimitEnable = true;
+    //              toConfigure.CurrentLimits = m_currentLimits;
         
         
         
         
-                 leftArm.getConfigurator().apply(toConfigure);
-                rightArm.getConfigurator().apply(toConfigure);
-              }
+    //              leftArm.getConfigurator().apply(toConfigure);
+    //             rightArm.getConfigurator().apply(toConfigure);
+    //           }
         
               
         
-          }
+    //       }
         
-          public void setspeed(Double speed){
-        leftArm.setControl(m_DutyCycle.withOutput(speed)
-        //.withLimitForwardMotion(!m_FwdLimit.get())
-        //.withLimitReverseMotion(!m_RevLimit.get())
-        );
-        rightArm.setControl(m_DutyCycle.withOutput(speed));
+    //       public void setspeed(Double speed){
+    //     leftArm.setControl(m_DutyCycle.withOutput(speed)
+    //     //.withLimitForwardMotion(!m_FwdLimit.get())
+    //     //.withLimitReverseMotion(!m_RevLimit.get())
+    //     );
+    //     rightArm.setControl(m_DutyCycle.withOutput(speed));
         
         
-          }
+    //       }
 
     public double get_arm_enc() {
        return  leftArm.getPosition().getValue();
@@ -146,8 +147,8 @@ public class Manipulator extends SubsystemBase {
     }
 
     public void move_arm(double power) {
-        leftArm.set(power);
-        rightArm.set(power);
+      leftArm.set(power);
+      rightArm.set(power);
         // leftArm.setControl(velocityRequest.withVelocity(power).withFeedForward(0.5));
 
 

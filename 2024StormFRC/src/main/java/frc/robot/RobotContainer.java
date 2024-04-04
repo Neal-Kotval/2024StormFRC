@@ -29,6 +29,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.commands.Delay;
 import frc.robot.commands.Intake.PowerIntake;
 import frc.robot.commands.Intake.TimedIntake;
+import frc.robot.commands.Intake.TimedOutake;
 import frc.robot.commands.Manipulator.*;
 import frc.robot.commands.Shooter.PowerShoot;
 import frc.robot.commands.Shooter.TimedShoot;
@@ -98,7 +99,7 @@ public class RobotContainer {
   public Trigger leftBumper = new Trigger(joystick2.leftBumper());
   public Trigger rightBumper = new Trigger(joystick2.rightBumper());
   public Trigger rightTrigger = new Trigger(()->(joystick2.getRightTriggerAxis()>0.1));
-  public Trigger leftTrigger = new Trigger(()->(joystick2.getRightTriggerAxis()>0.1));
+  public Trigger leftTrigger = new Trigger(()->(joystick2.getLeftTriggerAxis()>0.1));
  
 
   
@@ -110,16 +111,16 @@ public class RobotContainer {
     /*Swerve Bindings */
     drivetrain.setDefaultCommand
     (
-      drivetrain.applyRequest(() -> drive.withVelocityX(-Math.pow(joystick.getLeftY(),3) * MaxSpeed)
-      .withVelocityY(-Math.pow(joystick.getLeftX(),7) * MaxSpeed) // Drive left with negative X (left)
-      .withRotationalRate(Math.pow(-joystick.getRightX(),7) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+      drivetrain.applyRequest(() -> drive.withVelocityX(joystick.getLeftY() * MaxSpeed)
+      .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+      .withRotationalRate(joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
       ).ignoringDisable(true));
 
     driveFaceinangle.HeadingController = turnPID;
     driveFaceinangle.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
   
-    joystick.x().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(0)
-    .withVelocityY(0).withTargetDirection(m_Calcs.AbsRotationToTag(m_Calcs.TargetID,drivetrain.getrobotpose()).minus(drivetrain.Getoffsetroation()))));
+    // joystick.x().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(0)
+    // .withVelocityY(0).withTargetDirection(m_Calcs.AbsRotationToTag(drivetrain.getrobotpose()).minus(drivetrain.Getoffsetroation()))));
 
     joystick.rightBumper().onTrue(
            Commands.deferredProxy(() -> drivetrain.speakerAlign()));
@@ -146,8 +147,8 @@ public class RobotContainer {
     //operator
     padUp.whileTrue(new MoveArm(manipulator, Constants.armPower));
     padDown.whileTrue(new MoveArm(manipulator, -Constants.armPower));
-    padLeft.whileTrue(new SetSpeed(manipulator,2));
-    padRight.whileTrue(new SetSpeed(manipulator,-2));
+    // padLeft.whileTrue(new SetSpeed(manipulator,2));
+    // padRight.whileTrue(new SetSpeed(manipulator,-2));
 
     leftYAxisActiveUp.whileTrue(new TelescopeLeft(telescope, 0.2));
     leftYAxisActiveDown.whileTrue(new TelescopeLeft(telescope, -0.2));
@@ -155,12 +156,12 @@ public class RobotContainer {
     rightYAxisActiveDown.whileTrue(new TelescopeRight(telescope, -0.2));
     leftBumper.whileTrue(new PowerIntake(intake, -0.7));
     rightBumper.whileTrue(new PowerIntake(intake, 0.7));
-    rightTrigger.whileTrue(new PowerShoot(shooter, -0.7));
+    rightTrigger.whileTrue(new PowerShoot(shooter, -1));
     leftTrigger.whileTrue(new PowerShoot(shooter, 0.1));
     operatorX.onTrue(new SetArm(manipulator, 0));
     operatorY.onTrue(new ArmPos(manipulator, 24));
-    operatorA.onTrue(new ParallelCommandGroup(new SequentialCommandGroup(new Delay(1), new TimedIntake(intake,1)), new TimedShoot(shooter,2)));
-    operatorB.onTrue(new SetArm(manipulator, 2));
+    // operatorA.onTrue(new ParallelCommandGroup(new SequentialCommandGroup(new Delay(1), new TimedIntake(intake,1)), new TimedShoot(shooter,2)));
+    operatorB.onTrue(new ArmPos(manipulator,37 ));
 
   }
 
@@ -173,7 +174,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("parallelShoot", new ParallelCommandGroup(new SequentialCommandGroup(new Delay(2), new TimedIntake(intake,1)), new TimedShoot(shooter,4)));
     NamedCommands.registerCommand("moveArmFloor", new ArmPos(manipulator, 0).withTimeout(1));
     NamedCommands.registerCommand("moveArmShoot", new ArmPos(manipulator,16).withTimeout(1));
-   
+    NamedCommands.registerCommand("timedOutake", new TimedOutake(intake));
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
     configureBindings();

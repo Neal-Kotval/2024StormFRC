@@ -119,8 +119,8 @@ public class RobotContainer {
     driveFaceinangle.HeadingController = turnPID;
     driveFaceinangle.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
   
-    // joystick.x().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(0)
-    // .withVelocityY(0).withTargetDirection(m_Calcs.AbsRotationToTag(drivetrain.getrobotpose()).minus(drivetrain.Getoffsetroation()))));
+    joystick.x().toggleOnTrue(  drivetrain.applyRequest(() -> driveFaceinangle.withVelocityX(0)
+    .withVelocityY(0).withTargetDirection(m_Calcs.AbsRotationToTag(drivetrain.getrobotpose()).minus(drivetrain.Getoffsetroation()))));
 
     joystick.rightBumper().onTrue(
            Commands.deferredProxy(() -> drivetrain.speakerAlign()));
@@ -175,6 +175,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("moveArmFloor", new ArmPos(manipulator, 0).withTimeout(1));
     NamedCommands.registerCommand("moveArmShoot", new ArmPos(manipulator,16).withTimeout(1));
     NamedCommands.registerCommand("timedOutake", new TimedOutake(intake));
+    NamedCommands.registerCommand("moveArmShoot37", new ArmPos(manipulator,37).withTimeout(1));
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
     configureBindings();

@@ -7,8 +7,11 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Quaternion;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -80,7 +83,11 @@ return distFT;
 
 
 public Rotation2d AbsRotationToTag(  Pose2d RobotPose2D){
-  Pose2d TagPose = new Pose2d(1.75,FieldConstants.Speaker.centerSpeakerOpening.getY(), Rotation2d.fromDegrees(180));
+ Translation3d translation3d = new Translation3d(16.579342,5.547867999999999,1.4511020000000001 );
+  Quaternion q = new Quaternion(6.123233995736766e-17,0.0,0.0,1.0);
+  Rotation3d rotation3d = new Rotation3d(q) ;
+  Pose3d tag = new Pose3d(translation3d,rotation3d);
+  Pose2d TagPose = tag.toPose2d();
 Pose2d RoboPose = RobotPose2D;
 Translation2d targeTranslation2d = TagPose.getTranslation();
 Translation2d relativeTranslation = targeTranslation2d.minus(RoboPose.getTranslation());
